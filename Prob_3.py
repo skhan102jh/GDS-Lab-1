@@ -3,12 +3,19 @@ import sys
 total_bps = 0
 lengths_list = []
 
+temp_length = 0
 # Assuming that one sequence can be read in one line
 for line in sys.stdin: 
     line = str.strip(line)
-    temp_length = len(line) 
-    lengths_list.append(temp_length)
-    total_bps += temp_length
+    # If we are looking at an ID
+    if (line[0] == '@'):
+        lengths_list.append(temp_length)
+        temp_length = 0
+    else: 
+        temp_length += len(line) 
+        total_bps += temp_length
+# At the end of the input, we have to add the last contig to list
+lengths_list.append(temp_length)
 
 # Sort the list 
 lengths_list.sort(reverse=True)
